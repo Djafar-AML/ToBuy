@@ -63,13 +63,12 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // room
-    // To use Kotlin annotation processing tool (kapt)
     def roomVersion = "2.5.0-rc01"
 
     implementation "androidx.room:room-runtime:$roomVersion"
 
-    // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:$roomVersion"
+    // To use Kotlin annotation processing tool (kapt)
     implementation "androidx.room:room-ktx:$roomVersion"
 
     // navigation components

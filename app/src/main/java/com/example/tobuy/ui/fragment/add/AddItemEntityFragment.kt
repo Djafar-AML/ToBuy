@@ -23,7 +23,36 @@ class AddItemEntityFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showSoftKeyboard(binding.titleEditText)
+        setupObservers()
         setupClickListeners()
+    }
+
+    private fun setupObservers() {
+        sharedViewModel.transactionLiveData.observe(viewLifecycleOwner) { complete ->
+            if (complete) {
+                showToastMessage("item saved!")
+                resetAddItemEntityViews()
+                resetTransactionLiveDataState()
+            }
+        }
+    }
+
+    private fun resetAddItemEntityViews() {
+
+        binding.apply {
+
+            titleEditText.text = null
+            titleEditText.requestFocus()
+
+            descriptionEditText.text = null
+            radioGroup.check(radioButtonLow.id)
+        }
+    }
+
+    private fun resetTransactionLiveDataState() {
+        sharedViewModel.resetTransactionLiveDataState()
     }
 
     private fun setupClickListeners() {

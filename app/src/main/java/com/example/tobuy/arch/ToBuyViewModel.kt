@@ -19,6 +19,9 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     private val _itemEntitiesLiveData = MutableLiveData<List<ItemEntity>>()
     val itemEntitiesLiveData: LiveData<List<ItemEntity>> = _itemEntitiesLiveData
 
+    private val _transactionCompleteLiveData = MutableLiveData<Boolean>()
+    val transactionLiveData: LiveData<Boolean> = _transactionCompleteLiveData
+
     init {
         initCoroutineScope()
         coroutineScope.launch {
@@ -30,7 +33,9 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     fun insertItem(itemEntity: ItemEntity) {
         coroutineScope.launch {
-            toBuyRepo.insertItem(itemEntity)
+            toBuyRepo.insertItem(itemEntity) { complete ->
+                _transactionCompleteLiveData.postValue(complete)
+            }
         }
     }
 
@@ -52,6 +57,10 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     private fun cancelTheCoroutineScope() {
         if (::coroutineScope.isInitialized)
             coroutineScope.cancel()
+    }
+
+    fun resetTransactionLiveDataState() {
+        _transactionCompleteLiveData.postValue(false)
     }
 
 }

@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun onDeleteItemCallback(itemEntity: ItemEntity) {
-
+        sharedViewModel.deleteItem(itemEntity)
     }
 
     private fun onBumpPriority(itemEntity: ItemEntity) {

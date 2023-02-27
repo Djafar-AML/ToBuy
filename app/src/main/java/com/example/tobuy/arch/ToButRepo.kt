@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 class ToButRepo(private val appDatabase: AppDatabase) {
 
-    suspend fun insertItem(itemEntity: ItemEntity) {
+    suspend fun insertItem(itemEntity: ItemEntity, insertCallback: (Boolean) -> Unit) {
         appDatabase.itemEntityDao().insert(itemEntity)
+        insertCallback.invoke(true)
     }
 
     suspend fun deleteItem(itemEntity: ItemEntity) {

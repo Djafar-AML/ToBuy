@@ -22,8 +22,9 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     init {
         initCoroutineScope()
         coroutineScope.launch {
-            val items = toBuyRepo.getAllItems()
-            _itemEntitiesLiveData.postValue(items)
+            toBuyRepo.getAllItems().collect { items ->
+                _itemEntitiesLiveData.postValue(items)
+            }
         }
     }
 

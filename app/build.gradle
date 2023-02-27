@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-android'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -63,14 +64,14 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // room
-    def roomVersion = "2.5.0-rc01"
+    def roomVersion = "2.5.0"
 
     implementation "androidx.room:room-runtime:$roomVersion"
 
-    kapt "androidx.room:room-compiler:$roomVersion"
     // To use Kotlin annotation processing tool (kapt)
     implementation "androidx.room:room-ktx:$roomVersion"
-
+    ksp "androidx.room:room-compiler:$roomVersion"
+//    ksp "androidx.room:room-compiler:$room_version"
     // navigation components
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

@@ -28,11 +28,15 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     }
 
     fun insertItem(itemEntity: ItemEntity) {
-        toBuyRepo.insertItem(itemEntity)
+        coroutineScope.launch {
+            toBuyRepo.insertItem(itemEntity)
+        }
     }
 
     fun deleteItem(itemEntity: ItemEntity) {
-        toBuyRepo.deleteItem(itemEntity)
+        coroutineScope.launch {
+            toBuyRepo.deleteItem(itemEntity)
+        }
     }
 
     private fun initCoroutineScope() {

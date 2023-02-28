@@ -40,6 +40,10 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    private fun setupEpoxyRecyclerView() {
+        binding.homeEpoxyRV.setController(epoxyController)
+    }
+
     private fun setupSwipeToDelete() {
         EpoxyTouchHelper.initSwiping(binding.homeEpoxyRV)
             .right()
@@ -55,10 +59,6 @@ class HomeFragment : BaseFragment() {
                     sharedViewModel.deleteItem(itemEntity)
                 }
             })
-    }
-
-    private fun setupEpoxyRecyclerView() {
-        binding.homeEpoxyRV.setController(epoxyController)
     }
 
     private fun setupObservers() {
@@ -89,7 +89,9 @@ class HomeFragment : BaseFragment() {
 
         val currentPriority = itemEntity.priority
         var newPriority = currentPriority + 1
-        if (newPriority > 3) { newPriority = 1 }
+        if (newPriority > 3) {
+            newPriority = 1
+        }
 
         return newPriority
     }

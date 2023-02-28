@@ -9,8 +9,7 @@ import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.ui.fragment.home.epoxy.ViewBindingKotlinModel
 
 data class ItemEntityEpoxyModel(
-    private val itemEntity: ItemEntity,
-    private val onDeleteItemCallback: (ItemEntity) -> Unit,
+    val itemEntity: ItemEntity,
     private val onBumpPriority: (ItemEntity) -> Unit
 ) :
     ViewBindingKotlinModel<ModelItemEntityBinding>(
@@ -31,10 +30,7 @@ data class ItemEntityEpoxyModel(
         val color = colorBasedOnPriority()
         priorityTextView.setBackgroundColor(ContextCompat.getColor(root.context, color))
 
-        deleteImageView.setOnClickListener { onDeleteItemCallback.invoke(itemEntity) }
-
         priorityTextView.setOnClickListener { onBumpPriority.invoke(itemEntity) }
-
 
     }
 

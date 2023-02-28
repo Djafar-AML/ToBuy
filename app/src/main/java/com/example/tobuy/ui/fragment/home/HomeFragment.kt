@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
+import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
 
 class HomeFragment : BaseFragment() {
 
@@ -17,7 +19,7 @@ class HomeFragment : BaseFragment() {
     private val epoxyController by lazy { initHomeEpoxyController() }
 
     private fun initHomeEpoxyController() =
-        HomeEpoxyController(::onDeleteItemCallback, ::onBumpPriority)
+        HomeEpoxyController(::onBumpPriority)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,9 +34,27 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupEpoxyRecyclerView()
+        setupSwipeToDelete()
         setupObservers()
         setupClickListeners()
 
+    }
+
+    private fun setupSwipeToDelete() {
+        EpoxyTouchHelper.initSwiping(binding.homeEpoxyRV)
+            .right()
+            .withTarget(ItemEntityEpoxyModel::class.java)
+            .andCallbacks(object : EpoxyTouchHelper.SwipeCallbacks<ItemEntityEpoxyModel>() {
+                override fun onSwipeCompleted(
+                    model: ItemEntityEpoxyModel?,
+                    itemView: View?,
+                    position: Int,
+                    direction: Int
+                ) {
+                    val itemEntity = model?.itemEntity ?: return
+                    sharedViewModel.deleteItem(itemEntity)
+                }
+            })
     }
 
     private fun setupEpoxyRecyclerView() {
@@ -54,10 +74,6 @@ class HomeFragment : BaseFragment() {
             navigateViaNavGraph(dest)
         }
 
-    }
-
-    private fun onDeleteItemCallback(itemEntity: ItemEntity) {
-        sharedViewModel.deleteItem(itemEntity)
     }
 
     private fun onBumpPriority(itemEntity: ItemEntity) {

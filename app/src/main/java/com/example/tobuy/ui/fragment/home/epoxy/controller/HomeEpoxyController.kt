@@ -6,7 +6,6 @@ import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.LoadingEpoxyModel
 
 class HomeEpoxyController(
-    private val onDeleteItemCallback: (ItemEntity) -> Unit,
     private val onBumpPriority: (ItemEntity) -> Unit
 ) : EpoxyController() {
 
@@ -37,7 +36,7 @@ class HomeEpoxyController(
         }
 
         itemEntityList.forEach { itemEntity ->
-            ItemEntityEpoxyModel(itemEntity, onDeleteItemCallback, onBumpPriority).id(itemEntity.id)
+            ItemEntityEpoxyModel(itemEntity, onBumpPriority).id(itemEntity.id)
                 .addTo(this)
         }
 

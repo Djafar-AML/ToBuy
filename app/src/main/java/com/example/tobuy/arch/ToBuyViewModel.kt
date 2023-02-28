@@ -43,6 +43,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
         coroutineScope.launch {
             toBuyRepo.deleteItem(itemEntity)
         }
+
     }
 
     private fun initCoroutineScope() {
@@ -61,6 +62,13 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     fun resetTransactionLiveDataState() {
         _transactionCompleteLiveData.postValue(false)
+    }
+
+    fun updateItem(itemEntity: ItemEntity) {
+        coroutineScope.launch {
+            toBuyRepo.updateItem(itemEntity)
+        }
+
     }
 
 }

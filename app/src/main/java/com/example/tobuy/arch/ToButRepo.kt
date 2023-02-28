@@ -19,4 +19,8 @@ class ToButRepo(private val appDatabase: AppDatabase) {
         return appDatabase.itemEntityDao().getAllItemEntities()
     }
 
+    suspend fun updateItem(itemEntity: ItemEntity) {
+        appDatabase.itemEntityDao().update(itemEntity)
+    }
+
 }

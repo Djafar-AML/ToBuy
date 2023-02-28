@@ -2,6 +2,7 @@ package com.example.tobuy.ui.fragment.home.epoxy.controller
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.ui.fragment.home.epoxy.model.EmptyStateExpoyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.LoadingEpoxyModel
 
@@ -31,7 +32,7 @@ class HomeEpoxyController(
         }
 
         if (itemEntityList.isEmpty()) {
-            // todo empty state
+            EmptyStateExpoyModel().id("empty_state").addTo(this)
             return
         }
 

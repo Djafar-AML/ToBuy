@@ -27,14 +27,16 @@ data class ItemEntityEpoxyModel(
             descriptionTextView.text = itemEntity.description
         }
 
-        val color = colorBasedOnPriority()
-        priorityTextView.setBackgroundColor(ContextCompat.getColor(root.context, color))
+        val colorRes = colorResBasedOnPriority()
+        val color = ContextCompat.getColor(root.context, colorRes)
+        priorityTextView.setBackgroundColor(color)
+        root.strokeColor = color
 
         priorityTextView.setOnClickListener { onBumpPriority.invoke(itemEntity) }
 
     }
 
-    private fun colorBasedOnPriority() = when (itemEntity.priority) {
+    private fun colorResBasedOnPriority() = when (itemEntity.priority) {
         1 -> android.R.color.holo_green_dark
         2 -> android.R.color.holo_orange_dark
         3 -> android.R.color.holo_red_dark

@@ -19,7 +19,7 @@ class HomeFragment : BaseFragment() {
     private val epoxyController by lazy { initHomeEpoxyController() }
 
     private fun initHomeEpoxyController() =
-        HomeEpoxyController(::onBumpPriority)
+        HomeEpoxyController(::onBumpPriority, ::onItemSelect)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,6 +83,11 @@ class HomeFragment : BaseFragment() {
         val updatedItemEntity = itemEntity.copy(priority = newPriority)
         sharedViewModel.updateItem(updatedItemEntity)
 
+    }
+
+    private fun onItemSelect(itemEntity: ItemEntity) {
+        val dest = HomeFragmentDirections.actionHomeFragmentToAddItemEntityFragment(itemEntity.id)
+        navigateViaNavGraph(dest)
     }
 
     private fun updatePriority(itemEntity: ItemEntity): Int {

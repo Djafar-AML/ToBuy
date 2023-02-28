@@ -10,7 +10,8 @@ import com.example.tobuy.ui.fragment.home.epoxy.ViewBindingKotlinModel
 
 data class ItemEntityEpoxyModel(
     val itemEntity: ItemEntity,
-    private val onBumpPriority: (ItemEntity) -> Unit
+    private val onBumpPriority: (ItemEntity) -> Unit,
+    private val onItemSelect: (ItemEntity) -> Unit
 ) :
     ViewBindingKotlinModel<ModelItemEntityBinding>(
         R.layout.model_item_entity
@@ -33,6 +34,8 @@ data class ItemEntityEpoxyModel(
         root.strokeColor = color
 
         priorityTextView.setOnClickListener { onBumpPriority.invoke(itemEntity) }
+
+        root.setOnClickListener { onItemSelect.invoke(itemEntity) }
 
     }
 

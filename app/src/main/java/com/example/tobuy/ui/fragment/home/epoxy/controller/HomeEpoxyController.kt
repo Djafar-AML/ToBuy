@@ -8,7 +8,8 @@ import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.LoadingEpoxyModel
 
 class HomeEpoxyController(
-    private val onBumpPriority: (ItemEntity) -> Unit
+    private val onBumpPriority: (ItemEntity) -> Unit,
+    private val onItemSelect: (ItemEntity) -> Unit
 ) : EpoxyController() {
 
     var isLoading = true
@@ -52,7 +53,7 @@ class HomeEpoxyController(
 
                 }
 
-                ItemEntityEpoxyModel(itemEntity, onBumpPriority).id(itemEntity.id)
+                ItemEntityEpoxyModel(itemEntity, onBumpPriority, onItemSelect).id(itemEntity.id)
                     .addTo(this)
             }
 

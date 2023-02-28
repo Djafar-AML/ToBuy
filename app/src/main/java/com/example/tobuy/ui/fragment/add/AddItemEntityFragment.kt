@@ -1,6 +1,7 @@
 package com.example.tobuy.ui.fragment.add
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import java.util.*
 
+var isOnItemSelectEdit: Boolean = false
 class AddItemEntityFragment : BaseFragment() {
 
     private var _binding: FragmentAddItemEntityBinding? = null
@@ -149,6 +151,7 @@ class AddItemEntityFragment : BaseFragment() {
 
     private fun updateTheItemEntity(updateItemEntity: ItemEntity?) {
 
+        isOnItemSelectEdit = true
         updateItemEntity?.let { sharedViewModel.updateItem(updateItemEntity) }
     }
 

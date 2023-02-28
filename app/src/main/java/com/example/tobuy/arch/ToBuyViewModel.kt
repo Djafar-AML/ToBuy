@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.ui.fragment.add.isOnItemSelectEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,7 +72,8 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     fun updateItem(itemEntity: ItemEntity) {
         coroutineScope.launch {
             toBuyRepo.updateItem(itemEntity) { isSuccess ->
-                _transactionUpdateLiveData.postValue(isSuccess)
+                if (isOnItemSelectEdit)
+                    _transactionUpdateLiveData.postValue(isSuccess)
             }
         }
 

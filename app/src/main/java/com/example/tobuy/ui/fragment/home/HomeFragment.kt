@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.ui.fragment.add.isOnItemSelectEdit
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
 import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
@@ -81,6 +82,7 @@ class HomeFragment : BaseFragment() {
         val newPriority = updatePriority(itemEntity)
 
         val updatedItemEntity = itemEntity.copy(priority = newPriority)
+        isOnItemSelectEdit = false
         sharedViewModel.updateItem(updatedItemEntity)
 
     }

@@ -1,10 +1,10 @@
 package com.example.tobuy.ui.fragment.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.navigation.fragment.navArgs
 import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.room.entity.ItemEntity
@@ -12,6 +12,7 @@ import com.example.tobuy.ui.fragment.base.BaseFragment
 import java.util.*
 
 var isOnItemSelectEdit: Boolean = false
+
 class AddItemEntityFragment : BaseFragment() {
 
     private var _binding: FragmentAddItemEntityBinding? = null
@@ -94,7 +95,50 @@ class AddItemEntityFragment : BaseFragment() {
                     updateTheItemEntity(readUpdateDItemDataFromUserInput())
                 }
             }
+
+            quantitySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+
+
+                    val isValidInput = validateUserInput()
+
+                    if (isValidInput.not()) {
+                        return
+                    }
+
+                    val sanitizedText = modifyTextBasedOnSeekBar(progress)
+
+                    binding.titleEditText.apply {
+                        setText(sanitizedText)
+                        setSelection(sanitizedText.length)
+                    }
+
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
         }
+    }
+
+    private fun modifyTextBasedOnSeekBar(progress: Int): String {
+
+        val currentTitleText = binding.titleEditText.text.toString().trim()
+        val startIndex = currentTitleText.indexOf("<") - 1
+        val newText = if (startIndex > 0) {
+            "${currentTitleText.substring(0, startIndex)} <$progress>"
+        } else {
+            "$currentTitleText <$progress>"
+        }
+
+        return newText.replace(" <0>", "")
     }
 
     private fun validateUserInput(): Boolean {
@@ -173,10 +217,26 @@ class AddItemEntityFragment : BaseFragment() {
                     else -> radioGroup.check(radioButtonHigh.id)
                 }
 
+                setSeekBarQuantityCount(itemEntity)
                 saveButton.text = "Update"
             }
         }
 
+    }
+
+    private fun setSeekBarQuantityCount(itemEntity: ItemEntity) {
+
+        if (itemEntity.title.contains(" <")) {
+
+            val startIndex = itemEntity.title.indexOf("<") + 1
+            val endIndex = itemEntity.title.indexOf(">")
+            try {
+                val progress = itemEntity.title.substring(startIndex, endIndex).toInt()
+                binding.quantitySeekBar.progress = progress
+            } catch (e: Exception) {
+                return
+            }
+        }
     }
 
     override fun onDestroyView() {

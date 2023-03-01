@@ -9,9 +9,12 @@
         android:id="@+id/homeEpoxyRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
-        app:itemSpacing="8dp"
         android:paddingHorizontal="4dp"
+        android:paddingBottom="76dp"
+        app:itemSpacing="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 

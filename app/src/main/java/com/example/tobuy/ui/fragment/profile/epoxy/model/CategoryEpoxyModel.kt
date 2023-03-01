@@ -28,7 +28,7 @@ data class CategoryEpoxyModel(
         }
     }
 
-    override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
-        return totalSpanCount
-    }
+//    override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
+//        return totalSpanCount
+//    }
 }

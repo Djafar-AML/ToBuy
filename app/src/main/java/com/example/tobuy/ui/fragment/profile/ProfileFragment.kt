@@ -42,7 +42,8 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun onCategoryEmptyStateClick() {
-
+        val direction = ProfileFragmentDirections.actionProfileFragmentToAddCategoryFragment()
+        navigateViaNavGraph(direction)
     }
 
     override fun onDestroyView() {

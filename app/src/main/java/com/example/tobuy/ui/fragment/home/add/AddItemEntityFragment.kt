@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment.add
+package com.example.tobuy.ui.fragment.home.add
 
 import android.os.Bundle
 import android.view.LayoutInflater

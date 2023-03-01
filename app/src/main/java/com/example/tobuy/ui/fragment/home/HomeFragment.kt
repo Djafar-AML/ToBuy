@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
 import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.ui.fragment.add.isOnItemSelectEdit
+import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
 import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel

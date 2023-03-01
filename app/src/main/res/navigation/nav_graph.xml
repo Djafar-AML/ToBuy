@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/addItemEntityFragment"
-        android:name="com.example.tobuy.ui.fragment.add.AddItemEntityFragment"
+        android:name="com.example.tobuy.ui.fragment.home.add.AddItemEntityFragment"
         android:label="Add"
         tools:layout="@layout/fragment_add_item_entity">
         <argument
@@ -29,8 +29,18 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        tools:layout="@layout/fragment_profile"
         android:name="com.example.tobuy.ui.fragment.profile.ProfileFragment"
-        android:label="Profile" />
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.example.tobuy.ui.fragment.profile.add.AddCategoryFragment"
+        android:label="AddCategoryFragment"
+        tools:layout="@layout/fragment_add_category" />
 
 </navigation>

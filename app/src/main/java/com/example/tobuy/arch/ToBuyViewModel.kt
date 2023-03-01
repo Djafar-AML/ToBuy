@@ -6,16 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.ui.fragment.add.isOnItemSelectEdit
+import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : ViewModel() {
+
 
     private lateinit var coroutineScope: CoroutineScope
 
@@ -30,6 +30,9 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     private val _categoriesLiveData = MutableLiveData<List<CategoryEntity>>()
     val categoriesLiveData: LiveData<List<CategoryEntity>> = _categoriesLiveData
+
+    private val _transactionAddCategoryLiveData = MutableLiveData<Boolean>()
+    val transactionAddCategoryLiveData: LiveData<Boolean> = _transactionAddCategoryLiveData
 
     init {
 
@@ -88,26 +91,30 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     // region Category entity
 
     fun insertCategory(categoryEntity: CategoryEntity) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             toBuyRepo.insertCategory(categoryEntity) { complete ->
-                _transactionInsertLiveData.postValue(complete)
+                _transactionAddCategoryLiveData.postValue(complete)
             }
         }
     }
 
     fun deleteCategory(categoryEntity: CategoryEntity) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             toBuyRepo.deleteCategory(categoryEntity)
         }
 
     }
 
     fun updateCategory(categoryEntity: CategoryEntity) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             toBuyRepo.updateCategory(categoryEntity) { isSuccess ->
             }
         }
 
+    }
+
+    fun resetTransactionAddCategoryLiveData() {
+        _transactionAddCategoryLiveData.postValue(false)
     }
 
     // endregion

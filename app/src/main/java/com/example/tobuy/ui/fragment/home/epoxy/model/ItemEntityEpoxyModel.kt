@@ -5,8 +5,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelItemEntityBinding
+import com.example.tobuy.epxoybinding.ViewBindingKotlinModel
 import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.ui.fragment.home.epoxy.ViewBindingKotlinModel
 
 data class ItemEntityEpoxyModel(
     val itemEntity: ItemEntity,

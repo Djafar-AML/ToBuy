@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment
+package com.example.tobuy.ui.fragment.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,6 +1,7 @@
 package com.example.tobuy.arch
 
 import com.example.tobuy.room.AppDatabase
+import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -21,6 +22,24 @@ class ToButRepo(private val appDatabase: AppDatabase) {
 
     suspend fun updateItem(itemEntity: ItemEntity, updateCallback: (Boolean) -> Unit) {
         appDatabase.itemEntityDao().update(itemEntity)
+        updateCallback.invoke(true)
+    }
+
+    suspend fun insertCategory(categoryEntity: CategoryEntity, insertCallback: (Boolean) -> Unit) {
+        appDatabase.categoryEntityDao().insert(categoryEntity)
+        insertCallback.invoke(true)
+    }
+
+    suspend fun deleteCategory(categoryEntity: CategoryEntity) {
+        appDatabase.categoryEntityDao().delete(categoryEntity)
+    }
+
+    fun getAllCategories(): Flow<List<CategoryEntity>> {
+        return appDatabase.categoryEntityDao().getAllCategoryEntities()
+    }
+
+    suspend fun updateCategory(categoryEntity: CategoryEntity, updateCallback: (Boolean) -> Unit) {
+        appDatabase.categoryEntityDao().update(categoryEntity)
         updateCallback.invoke(true)
     }
 

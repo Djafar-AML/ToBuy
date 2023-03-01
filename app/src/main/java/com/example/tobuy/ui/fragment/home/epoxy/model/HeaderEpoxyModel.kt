@@ -10,4 +10,9 @@ data class HeaderEpoxyModel(val headerText: String) :
     override fun ModelHeaderItemBinding.bind() {
         textView.text = headerText
     }
+
+    override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
+        return totalSpanCount
+    }
+
 }

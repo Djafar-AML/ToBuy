@@ -3,6 +3,8 @@ package com.example.tobuy.arch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.ui.fragment.add.isOnItemSelectEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,15 +28,32 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     private val _transactionUpdateLiveData = MutableLiveData<Boolean>()
     val transactionUpdateLiveData: LiveData<Boolean> = _transactionUpdateLiveData
 
+    private val _categoriesLiveData = MutableLiveData<List<CategoryEntity>>()
+    val categoriesLiveData: LiveData<List<CategoryEntity>> = _categoriesLiveData
+
     init {
+
         initCoroutineScope()
+
         coroutineScope.launch {
             toBuyRepo.getAllItems().collect { items ->
                 _itemEntitiesLiveData.postValue(items)
             }
+
+        }
+
+        viewModelScope.launch {
+            toBuyRepo.getAllCategories().collect { categories ->
+                _categoriesLiveData.postValue(categories)
+            }
         }
     }
 
+    private fun initCoroutineScope() {
+        coroutineScope = viewModelScope
+    }
+
+    // region item entity realm
     fun insertItem(itemEntity: ItemEntity) {
         coroutineScope.launch {
             toBuyRepo.insertItem(itemEntity) { complete ->
@@ -50,20 +69,6 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     }
 
-    private fun initCoroutineScope() {
-        coroutineScope = CoroutineScope(Dispatchers.Default)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        cancelTheCoroutineScope()
-    }
-
-    private fun cancelTheCoroutineScope() {
-        if (::coroutineScope.isInitialized)
-            coroutineScope.cancel()
-    }
-
     fun resetUpsertTransactionLiveDataState() {
         _transactionInsertLiveData.postValue(false)
         _transactionUpdateLiveData.postValue(false)
@@ -77,6 +82,44 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
             }
         }
 
+    }
+    //endregion
+
+    // region Category entity
+
+    fun insertCategory(categoryEntity: CategoryEntity) {
+        coroutineScope.launch {
+            toBuyRepo.insertCategory(categoryEntity) { complete ->
+                _transactionInsertLiveData.postValue(complete)
+            }
+        }
+    }
+
+    fun deleteCategory(categoryEntity: CategoryEntity) {
+        coroutineScope.launch {
+            toBuyRepo.deleteCategory(categoryEntity)
+        }
+
+    }
+
+    fun updateCategory(categoryEntity: CategoryEntity) {
+        coroutineScope.launch {
+            toBuyRepo.updateCategory(categoryEntity) { isSuccess ->
+            }
+        }
+
+    }
+
+    // endregion
+
+    private fun cancelTheCoroutineScope() {
+        if (::coroutineScope.isInitialized)
+            coroutineScope.cancel()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelTheCoroutineScope()
     }
 
 }

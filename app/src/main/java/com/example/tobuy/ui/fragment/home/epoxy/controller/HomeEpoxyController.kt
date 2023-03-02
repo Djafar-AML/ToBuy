@@ -1,7 +1,9 @@
 package com.example.tobuy.ui.fragment.home.epoxy.controller
 
 import com.airbnb.epoxy.EpoxyController
+import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.home.epoxy.model.EmptyStateExpoyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.HeaderEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
@@ -19,13 +21,19 @@ class HomeEpoxyController(
                 requestModelBuild()
         }
 
-    var itemEntityList = ArrayList<ItemEntity>()
+//    var itemEntityList = ArrayList<ItemEntity>()
+//        set(value) {
+//            field = value
+//            isLoading = false
+//            requestModelBuild()
+//        }
+
+    var itemWithCategoryList = ArrayList<ItemWithCategoryEntity>()
         set(value) {
             field = value
             isLoading = false
             requestModelBuild()
         }
-
     override fun buildModels() {
 
         if (isLoading) {
@@ -33,27 +41,27 @@ class HomeEpoxyController(
             return
         }
 
-        if (itemEntityList.isEmpty()) {
+        if (itemWithCategoryList.isEmpty()) {
             EmptyStateExpoyModel().id("empty_state").addTo(this)
             return
         }
 
         var currentPriority = -1
 
-        itemEntityList
-            .sortedByDescending { it.createdAt }
-            .sortedByDescending { it.priority }
-            .forEach { itemEntity ->
+        itemWithCategoryList
+            .sortedByDescending { it.itemEntity.createdAt }
+            .sortedByDescending { it.itemEntity.priority }
+            .forEach { itemWithCategory ->
 
-                if (currentPriority != itemEntity.priority) {
+                if (currentPriority != itemWithCategory.itemEntity.priority) {
 
-                    currentPriority = itemEntity.priority
+                    currentPriority = itemWithCategory.itemEntity.priority
                     val headerText = headerTextBasedOnPriority(currentPriority)
                     HeaderEpoxyModel(headerText).id(headerText).addTo(this)
 
                 }
 
-                ItemEntityEpoxyModel(itemEntity, onBumpPriority, onItemSelect).id(itemEntity.id)
+                ItemEntityEpoxyModel(itemWithCategory, onBumpPriority, onItemSelect).id(itemWithCategory.itemEntity.id)
                     .addTo(this)
             }
 

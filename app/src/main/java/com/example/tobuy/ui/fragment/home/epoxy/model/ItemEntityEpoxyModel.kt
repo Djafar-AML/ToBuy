@@ -7,9 +7,10 @@ import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.epxoybinding.ViewBindingKotlinModel
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entity.ItemWithCategoryEntity
 
 data class ItemEntityEpoxyModel(
-    val itemEntity: ItemEntity,
+    val itemWithCategoryEntity: ItemWithCategoryEntity,
     private val onBumpPriority: (ItemEntity) -> Unit,
     private val onItemSelect: (ItemEntity) -> Unit
 ) :
@@ -19,13 +20,13 @@ data class ItemEntityEpoxyModel(
 
     override fun ModelItemEntityBinding.bind() {
 
-        titleTextView.text = itemEntity.title
+        titleTextView.text = itemWithCategoryEntity.itemEntity.title
 
-        if (itemEntity.description == null) {
+        if (itemWithCategoryEntity.itemEntity.description == null) {
             descriptionTextView.isGone = true
         } else {
             descriptionTextView.isVisible = true
-            descriptionTextView.text = itemEntity.description
+            descriptionTextView.text = itemWithCategoryEntity.itemEntity.description
         }
 
         val colorRes = colorResBasedOnPriority()
@@ -33,13 +34,13 @@ data class ItemEntityEpoxyModel(
         priorityTextView.setBackgroundColor(color)
         root.strokeColor = color
 
-        priorityTextView.setOnClickListener { onBumpPriority.invoke(itemEntity) }
+        priorityTextView.setOnClickListener { onBumpPriority.invoke(itemWithCategoryEntity.itemEntity) }
 
-        root.setOnClickListener { onItemSelect.invoke(itemEntity) }
+        root.setOnClickListener { onItemSelect.invoke(itemWithCategoryEntity.itemEntity) }
 
     }
 
-    private fun colorResBasedOnPriority() = when (itemEntity.priority) {
+    private fun colorResBasedOnPriority() = when (itemWithCategoryEntity.itemEntity.priority) {
         1 -> android.R.color.holo_green_dark
         2 -> android.R.color.holo_orange_dark
         3 -> android.R.color.holo_red_dark

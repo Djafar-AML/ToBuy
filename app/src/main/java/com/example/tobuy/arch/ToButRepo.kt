@@ -3,6 +3,7 @@ package com.example.tobuy.arch
 import com.example.tobuy.room.AppDatabase
 import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 class ToButRepo(private val appDatabase: AppDatabase) {
@@ -20,6 +21,9 @@ class ToButRepo(private val appDatabase: AppDatabase) {
         return appDatabase.itemEntityDao().getAllItemEntities()
     }
 
+    fun getAllItemWithCategoryEntity(): Flow<List<ItemWithCategoryEntity>> {
+        return appDatabase.itemEntityDao().getAllItemWithCategoryEntity()
+    }
     suspend fun updateItem(itemEntity: ItemEntity, updateCallback: (Boolean) -> Unit) {
         appDatabase.itemEntityDao().update(itemEntity)
         updateCallback.invoke(true)

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,8 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     private val _itemEntitiesLiveData = MutableLiveData<List<ItemEntity>>()
     val itemEntitiesLiveData: LiveData<List<ItemEntity>> = _itemEntitiesLiveData
+    private val _allItemWithCategoryEntity = MutableLiveData<List<ItemWithCategoryEntity>>()
+    val allItemWithCategoryEntity : LiveData<List<ItemWithCategoryEntity>> = _allItemWithCategoryEntity
 
     private val _transactionInsertLiveData = MutableLiveData<Event<Boolean>>()
     val transactionInsertLiveData: LiveData<Event<Boolean>> = _transactionInsertLiveData
@@ -39,8 +42,8 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
         initCoroutineScope()
 
         coroutineScope.launch {
-            toBuyRepo.getAllItems().collect { items ->
-                _itemEntitiesLiveData.postValue(items)
+            toBuyRepo.getAllItemWithCategoryEntity().collect { items ->
+                _allItemWithCategoryEntity.postValue(items)
             }
 
         }

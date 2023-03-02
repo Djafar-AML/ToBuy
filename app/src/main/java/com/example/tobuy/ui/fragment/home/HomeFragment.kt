@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
 import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
+import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
+import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
 import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
 
@@ -56,15 +57,17 @@ class HomeFragment : BaseFragment() {
                     position: Int,
                     direction: Int
                 ) {
-                    val itemEntity = model?.itemEntity ?: return
-                    sharedViewModel.deleteItem(itemEntity)
+                    val itemEntity = model?.itemWithCategoryEntity ?: return
+                    sharedViewModel.deleteItem(itemEntity.itemEntity)
                 }
             })
     }
 
     private fun setupObservers() {
-        sharedViewModel.itemEntitiesLiveData.observe(viewLifecycleOwner) { itemEntityList ->
-            epoxyController.itemEntityList = itemEntityList as ArrayList<ItemEntity>
+        sharedViewModel.allItemWithCategoryEntity.observe(viewLifecycleOwner) { itemWithCategoryList ->
+//            epoxyController.itemEntityList = itemEntityList as ArrayList<ItemEntity>
+            epoxyController.itemWithCategoryList =
+                itemWithCategoryList as ArrayList<ItemWithCategoryEntity>
         }
     }
 

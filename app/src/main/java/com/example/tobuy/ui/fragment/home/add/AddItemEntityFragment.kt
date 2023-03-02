@@ -10,7 +10,6 @@ import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
-import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
 import com.example.tobuy.ui.fragment.profile.epoxy.controller.CategoryViewStateEpoxyController
 import java.util.*
 
@@ -51,30 +50,6 @@ class AddItemEntityFragment : BaseFragment() {
         setupCategoriesEpoxy()
         setupCategoryListData()
 
-    }
-
-    private fun setupCategoryListData() {
-
-        val categories = sharedViewModel.categoryList()
-
-        if (categories.isNotEmpty()) {
-
-            sharedViewModel.enableCategoriesLoadingState()
-
-            val categoryId = selectedItemEntity?.categoryEntity?.id ?: ""
-            sharedViewModel.loadCategories(categoryId, categories)
-
-        } else {
-            sharedViewModel.categoryEmptyList()
-        }
-
-    }
-
-    private fun setupCategoriesEpoxy() {
-
-        categoryViewStateEpoxyController = CategoryViewStateEpoxyController(::onCategorySelected)
-
-        binding.categoryEpoxyRecyclerView.setController(categoryViewStateEpoxyController)
     }
 
     private fun onCategorySelected(categoryId: String) {
@@ -278,6 +253,30 @@ class AddItemEntityFragment : BaseFragment() {
                 return
             }
         }
+    }
+
+    private fun setupCategoriesEpoxy() {
+
+        categoryViewStateEpoxyController = CategoryViewStateEpoxyController(::onCategorySelected)
+
+        binding.categoryEpoxyRecyclerView.setController(categoryViewStateEpoxyController)
+    }
+
+    private fun setupCategoryListData() {
+
+        val categories = sharedViewModel.categoryList()
+
+        if (categories.isNotEmpty()) {
+
+            sharedViewModel.enableCategoriesLoadingState()
+
+            val categoryId = selectedItemEntity?.categoryEntity?.id ?: ""
+            sharedViewModel.loadCategories(categoryId, categories)
+
+        } else {
+            sharedViewModel.categoryEmptyList()
+        }
+
     }
 
     override fun onDestroyView() {

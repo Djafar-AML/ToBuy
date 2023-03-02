@@ -125,6 +125,14 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
         val viewStateItemList = ArrayList<CategoryViewState.Item>()
 
+        // Default category (un-selecting a category)
+        viewStateItemList.add(
+            CategoryViewState.Item(
+                categoryEntity = CategoryEntity(name = "None"),
+                isSelected = categoryId == ""
+            )
+        )
+
         categories.forEach {
             viewStateItemList.add(
                 CategoryViewState.Item(

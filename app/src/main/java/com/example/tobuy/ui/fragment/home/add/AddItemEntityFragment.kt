@@ -10,6 +10,7 @@ import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
+import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
 import com.example.tobuy.ui.fragment.profile.epoxy.controller.CategoryViewStateEpoxyController
 import java.util.*
 
@@ -31,6 +32,7 @@ class AddItemEntityFragment : BaseFragment() {
     private var isInEditMode: Boolean = false
 
     private lateinit var categoryViewStateEpoxyController: CategoryViewStateEpoxyController
+    private var selectedCategoryId: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -76,7 +78,8 @@ class AddItemEntityFragment : BaseFragment() {
     }
 
     private fun onCategorySelected(categoryId: String) {
-        showToastMessage(categoryId)
+        selectedCategoryId = categoryId
+        sharedViewModel.loadCategories(selectedCategoryId, sharedViewModel.categoryList())
     }
 
     private fun setupObservers() {
@@ -200,7 +203,7 @@ class AddItemEntityFragment : BaseFragment() {
             description = itemDescription,
             priority = itemPriority,
             createdAt = System.currentTimeMillis(),
-            categoryId = "" //todo update this later
+            categoryId = selectedCategoryId
         )
 
     }
@@ -221,7 +224,8 @@ class AddItemEntityFragment : BaseFragment() {
         return selectedItemEntity?.itemEntity?.copy(
             title = binding.titleEditText.text.toString(),
             description = binding.descriptionEditText.text.toString(),
-            priority = itemPriority()
+            priority = itemPriority(),
+            categoryId = selectedCategoryId
         )
     }
 
@@ -250,10 +254,15 @@ class AddItemEntityFragment : BaseFragment() {
                 }
 
                 setSeekBarQuantityCount(itemWithCategoryEntity.itemEntity)
+                setSelectedCategoryUi(itemWithCategoryEntity.itemEntity.categoryId)
                 saveButton.text = "Update"
             }
         }
 
+    }
+
+    private fun setSelectedCategoryUi(categoryId: String) {
+        selectedCategoryId = categoryId
     }
 
     private fun setSeekBarQuantityCount(itemEntity: ItemEntity) {

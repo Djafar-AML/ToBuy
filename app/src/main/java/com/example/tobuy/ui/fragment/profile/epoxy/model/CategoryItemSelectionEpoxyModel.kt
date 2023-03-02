@@ -19,15 +19,7 @@ data class CategoryItemSelectionEpoxyModel(
 
         colorize()
 
-        root.setOnClickListener {
-            flipIsItemSelected()
-            colorize()
-            onCategorySelected(item.categoryEntity.id)
-        }
-    }
-
-    private fun flipIsItemSelected() {
-        item.isSelected = !item.isSelected
+        root.setOnClickListener { onCategorySelected(item.categoryEntity.id) }
     }
 
     private fun ModelCategoryItemSelectionBinding.colorize() {

@@ -10,6 +10,6 @@ data class CategoryViewState(
 
     data class Item(
         val categoryEntity: CategoryEntity = CategoryEntity(),
-        var isSelected: Boolean = false
+        val isSelected: Boolean = false
     )
 }

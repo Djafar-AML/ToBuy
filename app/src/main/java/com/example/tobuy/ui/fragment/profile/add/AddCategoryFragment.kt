@@ -34,8 +34,9 @@ class AddCategoryFragment : BaseFragment() {
     private fun setupObservers() {
 
         sharedViewModel.transactionAddCategoryLiveData.observe(viewLifecycleOwner) { completed ->
-            if (completed)
+            completed?.getContent()?.let {
                 navigateUp()
+            }
         }
     }
 
@@ -85,7 +86,6 @@ class AddCategoryFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        sharedViewModel.resetTransactionAddCategoryLiveData()
         _binding = null
     }
 

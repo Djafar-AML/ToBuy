@@ -22,17 +22,17 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     private val _itemEntitiesLiveData = MutableLiveData<List<ItemEntity>>()
     val itemEntitiesLiveData: LiveData<List<ItemEntity>> = _itemEntitiesLiveData
 
-    private val _transactionInsertLiveData = MutableLiveData<Boolean>()
-    val transactionInsertLiveData: LiveData<Boolean> = _transactionInsertLiveData
+    private val _transactionInsertLiveData = MutableLiveData<Event<Boolean>>()
+    val transactionInsertLiveData: LiveData<Event<Boolean>> = _transactionInsertLiveData
 
-    private val _transactionUpdateLiveData = MutableLiveData<Boolean>()
-    val transactionUpdateLiveData: LiveData<Boolean> = _transactionUpdateLiveData
+    private val _transactionUpdateLiveData = MutableLiveData<Event<Boolean>>()
+    val transactionUpdateLiveData: LiveData<Event<Boolean>> = _transactionUpdateLiveData
 
     private val _categoriesLiveData = MutableLiveData<List<CategoryEntity>>()
     val categoriesLiveData: LiveData<List<CategoryEntity>> = _categoriesLiveData
 
-    private val _transactionAddCategoryLiveData = MutableLiveData<Boolean>()
-    val transactionAddCategoryLiveData: LiveData<Boolean> = _transactionAddCategoryLiveData
+    private val _transactionAddCategoryLiveData = MutableLiveData<Event<Boolean>>()
+    val transactionAddCategoryLiveData: LiveData<Event<Boolean>> = _transactionAddCategoryLiveData
 
     init {
 
@@ -60,7 +60,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     fun insertItem(itemEntity: ItemEntity) {
         coroutineScope.launch {
             toBuyRepo.insertItem(itemEntity) { complete ->
-                _transactionInsertLiveData.postValue(complete)
+                _transactionInsertLiveData.postValue(Event(complete))
             }
         }
     }
@@ -72,16 +72,11 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     }
 
-    fun resetUpsertTransactionLiveDataState() {
-        _transactionInsertLiveData.postValue(false)
-        _transactionUpdateLiveData.postValue(false)
-    }
-
     fun updateItem(itemEntity: ItemEntity) {
         coroutineScope.launch {
             toBuyRepo.updateItem(itemEntity) { isSuccess ->
                 if (isOnItemSelectEdit)
-                    _transactionUpdateLiveData.postValue(isSuccess)
+                    _transactionUpdateLiveData.postValue(Event(isSuccess))
             }
         }
 
@@ -93,7 +88,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     fun insertCategory(categoryEntity: CategoryEntity) {
         viewModelScope.launch {
             toBuyRepo.insertCategory(categoryEntity) { complete ->
-                _transactionAddCategoryLiveData.postValue(complete)
+                _transactionAddCategoryLiveData.postValue(Event(complete))
             }
         }
     }
@@ -111,10 +106,6 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
             }
         }
 
-    }
-
-    fun resetTransactionAddCategoryLiveData() {
-        _transactionAddCategoryLiveData.postValue(false)
     }
 
     // endregion

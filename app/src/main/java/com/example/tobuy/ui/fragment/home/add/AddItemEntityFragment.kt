@@ -45,21 +45,18 @@ class AddItemEntityFragment : BaseFragment() {
 
     private fun setupObservers() {
 
-        sharedViewModel.transactionInsertLiveData.observe(viewLifecycleOwner) { complete ->
+        sharedViewModel.transactionInsertLiveData.observe(viewLifecycleOwner) { completed ->
 
-            if (complete) {
-
-                showToastMessage("item saved!")
+            completed?.getContent()?.let {
                 resetAddItemEntityViews()
-                resetUpsertTransactionLiveDataState()
+                showToastMessage("item saved!")
             }
         }
 
-        sharedViewModel.transactionUpdateLiveData.observe(viewLifecycleOwner) { complete ->
+        sharedViewModel.transactionUpdateLiveData.observe(viewLifecycleOwner) { completed ->
 
-            if (complete) {
+            completed?.getContent()?.let {
                 showToastMessage("item updated!")
-                resetUpsertTransactionLiveDataState()
             }
 
         }
@@ -75,10 +72,6 @@ class AddItemEntityFragment : BaseFragment() {
             descriptionEditText.text = null
             radioGroup.check(radioButtonLow.id)
         }
-    }
-
-    private fun resetUpsertTransactionLiveDataState() {
-        sharedViewModel.resetUpsertTransactionLiveDataState()
     }
 
     private fun setupClickListeners() {

@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import com.example.tobuy.arch.ToBuyViewModel
 import com.example.tobuy.ui.activity.MainActivity
+import com.google.android.material.color.MaterialColors
 
 
 abstract class BaseFragment : Fragment() {

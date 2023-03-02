@@ -10,22 +10,27 @@ import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
+import com.example.tobuy.ui.fragment.profile.epoxy.controller.CategoryViewStateEpoxyController
 import java.util.*
 
 var isOnItemSelectEdit: Boolean = false
 
 class AddItemEntityFragment : BaseFragment() {
 
+
     private var _binding: FragmentAddItemEntityBinding? = null
     private val binding by lazy { _binding!! }
 
     private val safeArgs: AddItemEntityFragmentArgs by navArgs()
     private val selectedItemEntity: ItemWithCategoryEntity? by lazy { findSelectedItemEntityWithId() }
-    private fun findSelectedItemEntityWithId() = sharedViewModel.allItemWithCategoryEntity.value?.find {
-        it.itemEntity.id == safeArgs.entityId
-    }
+    private fun findSelectedItemEntityWithId() =
+        sharedViewModel.allItemWithCategoryEntity.value?.find {
+            it.itemEntity.id == safeArgs.entityId
+        }
 
     private var isInEditMode: Boolean = false
+
+    private lateinit var categoryViewStateEpoxyController: CategoryViewStateEpoxyController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -41,8 +46,38 @@ class AddItemEntityFragment : BaseFragment() {
         setupObservers()
         setupClickListeners()
         setupEditMode()
+        setupCategoriesEpoxy()
+        setupCategoryListData()
+
     }
 
+    private fun setupCategoryListData() {
+
+        val categories = sharedViewModel.categoryList()
+
+        if (categories.isNotEmpty()) {
+
+            sharedViewModel.enableCategoriesLoadingState()
+
+            val categoryId = selectedItemEntity?.categoryEntity?.id ?: ""
+            sharedViewModel.loadCategories(categoryId, categories)
+
+        } else {
+            sharedViewModel.categoryEmptyList()
+        }
+
+    }
+
+    private fun setupCategoriesEpoxy() {
+
+        categoryViewStateEpoxyController = CategoryViewStateEpoxyController(::onCategorySelected)
+
+        binding.categoryEpoxyRecyclerView.setController(categoryViewStateEpoxyController)
+    }
+
+    private fun onCategorySelected(categoryId: String) {
+        showToastMessage(categoryId)
+    }
 
     private fun setupObservers() {
 
@@ -59,7 +94,10 @@ class AddItemEntityFragment : BaseFragment() {
             completed?.getContent()?.let {
                 showToastMessage("item updated!")
             }
+        }
 
+        sharedViewModel.categoriesViewState.observe(viewLifecycleOwner) { viewState ->
+            categoryViewStateEpoxyController.viewState = viewState
         }
     }
 

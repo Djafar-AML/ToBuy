@@ -71,9 +71,9 @@
             android:id="@+id/quantitySeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:max="10"
-            android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/quantityTextView"
@@ -129,6 +129,31 @@
 
         </RadioGroup>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/categoryTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Categories"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/descriptionTextField"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/categoryEpoxyRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            app:itemSpacing="8dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/categoryTextView"
+            app:spanCount="2" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
@@ -138,7 +163,7 @@
             android:layout_marginEnd="16dp"
             android:text="Save"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+            app:layout_constraintTop_toBottomOf="@id/categoryEpoxyRecyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

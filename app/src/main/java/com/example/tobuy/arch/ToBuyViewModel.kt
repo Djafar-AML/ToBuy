@@ -8,6 +8,7 @@ import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
+import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -22,8 +23,13 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
     private val _itemEntitiesLiveData = MutableLiveData<List<ItemEntity>>()
     val itemEntitiesLiveData: LiveData<List<ItemEntity>> = _itemEntitiesLiveData
+
     private val _allItemWithCategoryEntity = MutableLiveData<List<ItemWithCategoryEntity>>()
-    val allItemWithCategoryEntity : LiveData<List<ItemWithCategoryEntity>> = _allItemWithCategoryEntity
+    val allItemWithCategoryEntity: LiveData<List<ItemWithCategoryEntity>> =
+        _allItemWithCategoryEntity
+
+    private val _categoriesViewStateLiveData = MutableLiveData<CategoryViewState>()
+    val categoriesViewState: LiveData<CategoryViewState> = _categoriesViewStateLiveData
 
     private val _transactionInsertLiveData = MutableLiveData<Event<Boolean>>()
     val transactionInsertLiveData: LiveData<Event<Boolean>> = _transactionInsertLiveData
@@ -112,6 +118,36 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     }
 
     // endregion
+
+    fun categoryList() = categoriesLiveData.value ?: emptyList()
+
+    fun loadCategories(categoryId: String, categories: List<CategoryEntity>) {
+
+        val viewStateItemList = ArrayList<CategoryViewState.Item>()
+
+        categories.forEach {
+            viewStateItemList.add(
+                CategoryViewState.Item(
+                    categoryEntity = it,
+                    isSelected = it.id == categoryId
+                )
+            )
+        }
+
+        val viewState = CategoryViewState(itemList = viewStateItemList)
+        _categoriesViewStateLiveData.postValue(viewState)
+
+    }
+
+    fun enableCategoriesLoadingState() {
+        val loadingViewState = CategoryViewState(isLoading = true)
+        _categoriesViewStateLiveData.value = (loadingViewState)
+    }
+
+    fun categoryEmptyList() {
+        val viewState = CategoryViewState(isListEmpty = true)
+        _categoriesViewStateLiveData.postValue(viewState)
+    }
 
     private fun cancelTheCoroutineScope() {
         if (::coroutineScope.isInitialized)

@@ -1,13 +1,14 @@
 package com.example.tobuy.arch
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tobuy.extensions.asLiveData
 import com.example.tobuy.room.entity.CategoryEntity
 import com.example.tobuy.room.entity.ItemEntity
 import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
+import com.example.tobuy.ui.fragment.home.viewstate.HomeViewState
 import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -22,26 +23,30 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     private lateinit var coroutineScope: CoroutineScope
 
     private val _itemEntitiesLiveData = MutableLiveData<List<ItemEntity>>()
-    val itemEntitiesLiveData: LiveData<List<ItemEntity>> = _itemEntitiesLiveData
+    val itemEntitiesLiveData = _itemEntitiesLiveData.asLiveData()
 
     private val _allItemWithCategoryEntity = MutableLiveData<List<ItemWithCategoryEntity>>()
-    val allItemWithCategoryEntity: LiveData<List<ItemWithCategoryEntity>> =
-        _allItemWithCategoryEntity
+    val allItemWithCategoryEntity = _allItemWithCategoryEntity.asLiveData()
+
+    // home page
+    var cuurentSort = HomeViewState.Sort.NONOE
+    private val _homeViewStateLiveData = MutableLiveData<HomeViewState>()
+    val homeViewStateLiveData = _homeViewStateLiveData.asLiveData()
 
     private val _categoriesViewStateLiveData = MutableLiveData<CategoryViewState>()
-    val categoriesViewState: LiveData<CategoryViewState> = _categoriesViewStateLiveData
+    val categoriesViewState = _categoriesViewStateLiveData.asLiveData()
 
     private val _transactionInsertLiveData = MutableLiveData<Event<Boolean>>()
-    val transactionInsertLiveData: LiveData<Event<Boolean>> = _transactionInsertLiveData
+    val transactionInsertLiveData = _transactionInsertLiveData.asLiveData()
 
     private val _transactionUpdateLiveData = MutableLiveData<Event<Boolean>>()
-    val transactionUpdateLiveData: LiveData<Event<Boolean>> = _transactionUpdateLiveData
+    val transactionUpdateLiveData = _transactionUpdateLiveData.asLiveData()
 
     private val _categoriesLiveData = MutableLiveData<List<CategoryEntity>>()
-    val categoriesLiveData: LiveData<List<CategoryEntity>> = _categoriesLiveData
+    val categoriesLiveData = _categoriesLiveData.asLiveData()
 
     private val _transactionAddCategoryLiveData = MutableLiveData<Event<Boolean>>()
-    val transactionAddCategoryLiveData: LiveData<Event<Boolean>> = _transactionAddCategoryLiveData
+    val transactionAddCategoryLiveData = _transactionAddCategoryLiveData.asLiveData()
 
     init {
 
@@ -50,6 +55,8 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
         coroutineScope.launch {
             toBuyRepo.getAllItemWithCategoryEntity().collect { items ->
                 _allItemWithCategoryEntity.postValue(items)
+
+                updateHomeViewState(items)
             }
 
         }
@@ -58,6 +65,65 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
             toBuyRepo.getAllCategories().collect { categories ->
                 _categoriesLiveData.postValue(categories)
             }
+        }
+    }
+
+    private fun updateHomeViewState(items: List<ItemWithCategoryEntity>) {
+
+        val dataList = ArrayList<HomeViewState.DataItem<*>>()
+
+        when (cuurentSort) {
+
+            HomeViewState.Sort.NONOE -> {
+
+                var currentPriority = -1
+
+                items
+                    .sortedByDescending { it.itemEntity.priority }
+                    .forEach { itemWithCategory ->
+
+                        if (currentPriority != itemWithCategory.itemEntity.priority) {
+
+                            currentPriority = itemWithCategory.itemEntity.priority
+
+                            val headerItem =
+                                HomeViewState.DataItem(
+                                    data = headerTextBasedOnPriority(currentPriority),
+                                    isHeader = true
+                                )
+
+                            dataList.add(headerItem)
+                        }
+
+                        val dataItem = HomeViewState.DataItem(data = itemWithCategory)
+                        dataList.add(dataItem)
+
+                    }
+            }
+
+            HomeViewState.Sort.CATEGORY -> {}
+
+            HomeViewState.Sort.OLDEST -> {}
+
+            HomeViewState.Sort.NEWEST -> {}
+
+        }
+
+        _homeViewStateLiveData.postValue(
+            HomeViewState(
+                dataList = dataList,
+                isLoading = false,
+                sort = cuurentSort
+            )
+        )
+    }
+
+    private fun headerTextBasedOnPriority(priority: Int): String {
+
+        return when (priority) {
+            1 -> "Low"
+            2 -> "Medium"
+            else -> "High"
         }
     }
 

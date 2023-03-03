@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
 import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
@@ -64,10 +63,8 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        sharedViewModel.allItemWithCategoryEntity.observe(viewLifecycleOwner) { itemWithCategoryList ->
-//            epoxyController.itemEntityList = itemEntityList as ArrayList<ItemEntity>
-            epoxyController.itemWithCategoryList =
-                itemWithCategoryList as ArrayList<ItemWithCategoryEntity>
+        sharedViewModel.homeViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            epoxyController.viewState = viewState
         }
     }
 

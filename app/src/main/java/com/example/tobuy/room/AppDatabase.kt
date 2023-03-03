@@ -6,8 +6,8 @@ import androidx.room.RoomDatabase
 import com.example.tobuy.application.application
 import com.example.tobuy.room.dao.CategoryEntityDao
 import com.example.tobuy.room.dao.ItemEntityDao
-import com.example.tobuy.room.entity.CategoryEntity
-import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entities.CategoryEntity
+import com.example.tobuy.room.entities.ItemEntity
 import com.example.tobuy.room.migration.MIGRATION_1_2
 
 @Database(

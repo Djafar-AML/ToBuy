@@ -1,12 +1,12 @@
 package com.example.tobuy.ui.fragment.home.epoxy.controller
 
 import com.airbnb.epoxy.EpoxyController
-import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
-import com.example.tobuy.ui.fragment.home.epoxy.model.EmptyStateExpoyModel
-import com.example.tobuy.ui.fragment.home.epoxy.model.HeaderEpoxyModel
-import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
-import com.example.tobuy.ui.fragment.home.epoxy.model.LoadingEpoxyModel
+import com.example.tobuy.room.entities.ItemEntity
+import com.example.tobuy.room.entities.ItemWithCategoryEntity
+import com.example.tobuy.ui.fragment.home.epoxy.models.EmptyStateExpoyModel
+import com.example.tobuy.ui.fragment.home.epoxy.models.HeaderEpoxyModel
+import com.example.tobuy.ui.fragment.home.epoxy.models.ItemEntityEpoxyModel
+import com.example.tobuy.ui.fragment.home.epoxy.models.LoadingEpoxyModel
 import com.example.tobuy.ui.fragment.home.viewstate.HomeViewState
 
 class HomeEpoxyController(

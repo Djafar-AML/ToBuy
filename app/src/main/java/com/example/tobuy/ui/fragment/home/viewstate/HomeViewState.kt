@@ -3,7 +3,7 @@ package com.example.tobuy.ui.fragment.home.viewstate
 data class HomeViewState(
     val dataList: List<DataItem<*>> = emptyList(),
     val isLoading: Boolean = false,
-    val sort: Sort = Sort.NONOE,
+    val sort: Sort = Sort.NONE,
 ) {
 
     data class DataItem<T>(
@@ -12,7 +12,7 @@ data class HomeViewState(
     )
 
     enum class Sort(val displayName: String) {
-        NONOE("None"),
+        NONE("None"),
         CATEGORY("Category"),
         OLDEST("Oldest"),
         NEWEST("Newest")

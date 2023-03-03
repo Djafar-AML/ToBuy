@@ -1,7 +1,7 @@
 package com.example.tobuy.room.dao
 
 import androidx.room.*
-import com.example.tobuy.room.entity.CategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

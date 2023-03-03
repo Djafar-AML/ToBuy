@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment.profile.epoxy.model
+package com.example.tobuy.ui.fragment.profile.epoxy.models
 
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelEmptyButtonBinding

@@ -1,9 +1,9 @@
 package com.example.tobuy.arch
 
 import com.example.tobuy.room.AppDatabase
-import com.example.tobuy.room.entity.CategoryEntity
-import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
+import com.example.tobuy.room.entities.ItemEntity
+import com.example.tobuy.room.entities.ItemWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 class ToButRepo(private val appDatabase: AppDatabase) {

@@ -1,4 +1,4 @@
-package com.example.tobuy.room.entity
+package com.example.tobuy.room.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

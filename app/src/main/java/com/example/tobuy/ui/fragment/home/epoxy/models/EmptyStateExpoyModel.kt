@@ -1,6 +1,5 @@
-package com.example.tobuy.ui.fragment.home.epoxy.model
+package com.example.tobuy.ui.fragment.home.epoxy.models
 
-import com.airbnb.epoxy.EpoxyModel
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelEmptyStateBinding
 import com.example.tobuy.epxoybinding.ViewBindingKotlinModel

@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment.home.epoxy.model
+package com.example.tobuy.ui.fragment.home.epoxy.models
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -7,8 +7,8 @@ import androidx.core.view.isVisible
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.epxoybinding.ViewBindingKotlinModel
-import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
+import com.example.tobuy.room.entities.ItemEntity
+import com.example.tobuy.room.entities.ItemWithCategoryEntity
 
 data class ItemEntityEpoxyModel(
     val itemWithCategoryEntity: ItemWithCategoryEntity,

@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment.home.epoxy.model
+package com.example.tobuy.ui.fragment.home.epoxy.models
 
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelHeaderItemBinding

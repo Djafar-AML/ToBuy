@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.ToBuy" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/design_default_color_primary_variant</item>
+        <item name="android:statusBarColor">@color/primaryDarkColor</item>
         <!-- Customize your theme here. -->
 
         <item name="background">@color/primaryLightColor</item>

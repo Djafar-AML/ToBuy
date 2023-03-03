@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.tobuy.databinding.FragmentHomeBinding
-import com.example.tobuy.room.entity.ItemEntity
+import com.example.tobuy.room.entities.ItemEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
+import com.example.tobuy.ui.fragment.home.bottomsheet.SortBottomSheetFragment
 import com.example.tobuy.ui.fragment.home.epoxy.controller.HomeEpoxyController
-import com.example.tobuy.ui.fragment.home.epoxy.model.ItemEntityEpoxyModel
+import com.example.tobuy.ui.fragment.home.epoxy.models.ItemEntityEpoxyModel
 
 class HomeFragment : BaseFragment() {
 
@@ -70,11 +71,21 @@ class HomeFragment : BaseFragment() {
 
     private fun setupClickListeners() {
 
-        binding.fab.setOnClickListener {
-            val dest = HomeFragmentDirections.actionHomeFragmentToAddItemEntityFragment()
-            navigateViaNavGraph(dest)
+        binding.apply {
+            fab.setOnClickListener {
+                val dest = HomeFragmentDirections.actionHomeFragmentToAddItemEntityFragment()
+                navigateViaNavGraph(dest)
+            }
+
+            sortImageView.setOnClickListener {
+                showBottomSheet()
+            }
         }
 
+    }
+
+    private fun showBottomSheet() {
+        SortBottomSheetFragment().show(childFragmentManager, null)
     }
 
     private fun onBumpPriority(itemEntity: ItemEntity) {

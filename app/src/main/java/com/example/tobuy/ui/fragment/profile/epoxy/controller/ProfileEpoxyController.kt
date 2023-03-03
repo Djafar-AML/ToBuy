@@ -1,10 +1,10 @@
 package com.example.tobuy.ui.fragment.profile.epoxy.controller
 
 import com.airbnb.epoxy.EpoxyController
-import com.example.tobuy.room.entity.CategoryEntity
-import com.example.tobuy.ui.fragment.home.epoxy.model.HeaderEpoxyModel
-import com.example.tobuy.ui.fragment.profile.epoxy.model.CategoryEpoxyModel
-import com.example.tobuy.ui.fragment.profile.epoxy.model.EmptyButtonEpoxyModel
+import com.example.tobuy.room.entities.CategoryEntity
+import com.example.tobuy.ui.fragment.home.epoxy.models.HeaderEpoxyModel
+import com.example.tobuy.ui.fragment.profile.epoxy.models.CategoryEpoxyModel
+import com.example.tobuy.ui.fragment.profile.epoxy.models.EmptyButtonEpoxyModel
 
 class ProfileEpoxyController(private val onCategoryEmptyStateClick: () -> Unit) :
     EpoxyController() {

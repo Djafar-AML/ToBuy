@@ -1,9 +1,9 @@
 package com.example.tobuy.ui.fragment.profile.epoxy.controller
 
 import com.airbnb.epoxy.EpoxyController
-import com.example.tobuy.ui.fragment.home.epoxy.model.LoadingEpoxyModel
+import com.example.tobuy.ui.fragment.home.epoxy.models.LoadingEpoxyModel
 import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
-import com.example.tobuy.ui.fragment.profile.epoxy.model.CategoryItemSelectionEpoxyModel
+import com.example.tobuy.ui.fragment.profile.epoxy.models.CategoryItemSelectionEpoxyModel
 
 class CategoryViewStateEpoxyController(
     private val onCategorySelected: (String) -> Unit

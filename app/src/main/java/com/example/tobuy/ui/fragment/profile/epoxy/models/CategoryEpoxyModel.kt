@@ -1,10 +1,10 @@
-package com.example.tobuy.ui.fragment.profile.epoxy.model
+package com.example.tobuy.ui.fragment.profile.epoxy.models
 
 import androidx.appcompat.app.AlertDialog
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelCategoryBinding
 import com.example.tobuy.epxoybinding.ViewBindingKotlinModel
-import com.example.tobuy.room.entity.CategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
 
 data class CategoryEpoxyModel(
     val categoryEntity: CategoryEntity,

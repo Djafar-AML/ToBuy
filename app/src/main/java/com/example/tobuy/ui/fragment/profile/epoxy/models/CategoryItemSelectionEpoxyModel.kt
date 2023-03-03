@@ -1,4 +1,4 @@
-package com.example.tobuy.ui.fragment.profile.epoxy.model
+package com.example.tobuy.ui.fragment.profile.epoxy.models
 
 import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat

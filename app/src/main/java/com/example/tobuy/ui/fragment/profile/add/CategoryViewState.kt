@@ -1,6 +1,6 @@
 package com.example.tobuy.ui.fragment.profile.add
 
-import com.example.tobuy.room.entity.CategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
 
 data class CategoryViewState(
     val isLoading: Boolean = false,

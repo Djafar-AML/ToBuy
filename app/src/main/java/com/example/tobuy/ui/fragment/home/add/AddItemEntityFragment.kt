@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.navigation.fragment.navArgs
 import com.example.tobuy.databinding.FragmentAddItemEntityBinding
-import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
+import com.example.tobuy.room.entities.ItemEntity
+import com.example.tobuy.room.entities.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.profile.epoxy.controller.CategoryViewStateEpoxyController
 import java.util.*

@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tobuy.extensions.asLiveData
-import com.example.tobuy.room.entity.CategoryEntity
-import com.example.tobuy.room.entity.ItemEntity
-import com.example.tobuy.room.entity.ItemWithCategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
+import com.example.tobuy.room.entities.ItemEntity
+import com.example.tobuy.room.entities.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.home.add.isOnItemSelectEdit
 import com.example.tobuy.ui.fragment.home.viewstate.HomeViewState
 import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
@@ -29,7 +29,12 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     val allItemWithCategoryEntity = _allItemWithCategoryEntity.asLiveData()
 
     // home page
-    var cuurentSort = HomeViewState.Sort.NONOE
+    var cuurentSort = HomeViewState.Sort.NONE
+        set(value) {
+            field = value
+            updateHomeViewState(allItemWithCategoryEntity.value!!)
+        }
+
     private val _homeViewStateLiveData = MutableLiveData<HomeViewState>()
     val homeViewStateLiveData = _homeViewStateLiveData.asLiveData()
 
@@ -74,7 +79,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
         when (cuurentSort) {
 
-            HomeViewState.Sort.NONOE -> {
+            HomeViewState.Sort.NONE -> {
 
                 var currentPriority = -1
 

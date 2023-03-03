@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tobuy.databinding.FragmentAddCategoryBinding
-import com.example.tobuy.room.entity.CategoryEntity
+import com.example.tobuy.room.entities.CategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import java.util.*
 

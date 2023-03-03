@@ -54,6 +54,7 @@
             android:textColor="?attr/colorOnBackground"
             android:textStyle="italic"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/priorityTextView"
             tools:text="Amazon" />

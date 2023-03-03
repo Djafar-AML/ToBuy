@@ -1,5 +1,6 @@
 package com.example.tobuy.ui.fragment.home.epoxy.model
 
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -33,6 +34,11 @@ data class ItemEntityEpoxyModel(
         val color = ContextCompat.getColor(root.context, colorRes)
         priorityTextView.setBackgroundColor(color)
         root.strokeColor = color
+
+        itemWithCategoryEntity.categoryEntity?.name .let {
+            categoryNameTextView.visibility = View.VISIBLE
+            categoryNameTextView.text = itemWithCategoryEntity.categoryEntity?.name
+        }
 
         priorityTextView.setOnClickListener { onBumpPriority.invoke(itemWithCategoryEntity.itemEntity) }
 

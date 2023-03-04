@@ -8,6 +8,7 @@ import com.example.tobuy.ui.fragment.home.epoxy.models.HeaderEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.models.ItemEntityEpoxyModel
 import com.example.tobuy.ui.fragment.home.epoxy.models.LoadingEpoxyModel
 import com.example.tobuy.ui.fragment.home.viewstate.HomeViewState
+import java.util.UUID
 
 class HomeEpoxyController(
     private val onBumpPriority: (ItemEntity) -> Unit,
@@ -23,19 +24,19 @@ class HomeEpoxyController(
     override fun buildModels() {
 
         if (viewState.isLoading) {
-            LoadingEpoxyModel().id("loading_state").addTo(this)
+            LoadingEpoxyModel().id("loading_state ${UUID.randomUUID()}").addTo(this)
             return
         }
 
         if (viewState.dataList.isEmpty()) {
-            EmptyStateExpoyModel().id("empty_state").addTo(this)
+            EmptyStateExpoyModel().id("empty_state ${UUID.randomUUID()}").addTo(this)
             return
         }
 
         viewState.dataList.forEach { dataItem ->
 
             if (dataItem.isHeader) {
-                HeaderEpoxyModel(dataItem.data as String).id("header ${dataItem.data}").addTo(this)
+                HeaderEpoxyModel(dataItem.data as String).id("header ${UUID.randomUUID()}").addTo(this)
                 return@forEach
             }
 

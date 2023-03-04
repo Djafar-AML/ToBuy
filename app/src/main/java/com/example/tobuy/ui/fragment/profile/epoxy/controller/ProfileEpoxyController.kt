@@ -5,8 +5,12 @@ import com.example.tobuy.room.entities.CategoryEntity
 import com.example.tobuy.ui.fragment.home.epoxy.models.HeaderEpoxyModel
 import com.example.tobuy.ui.fragment.profile.epoxy.models.CategoryEpoxyModel
 import com.example.tobuy.ui.fragment.profile.epoxy.models.EmptyButtonEpoxyModel
+import java.util.UUID
 
-class ProfileEpoxyController(private val onCategoryEmptyStateClick: () -> Unit) :
+class ProfileEpoxyController(
+    private val onCategoryEmptyStateClick: () -> Unit,
+    private val onCategoryDeleteCallback: (CategoryEntity) -> Unit
+) :
     EpoxyController() {
 
     var categories: List<CategoryEntity> = emptyList()
@@ -17,13 +21,13 @@ class ProfileEpoxyController(private val onCategoryEmptyStateClick: () -> Unit) 
 
     override fun buildModels() {
 
-        HeaderEpoxyModel("Category").id("category_id").addTo(this)
+        HeaderEpoxyModel("Category").id("category_id ${UUID.randomUUID()}").addTo(this)
 
         categories.forEach {
-            CategoryEpoxyModel(it).id(it.id).addTo(this)
+            CategoryEpoxyModel(it, onCategoryDeleteCallback).id(it.id).addTo(this)
         }
 
-        EmptyButtonEpoxyModel("Add Category", onCategoryEmptyStateClick).id("add_category")
+        EmptyButtonEpoxyModel("Add Category", onCategoryEmptyStateClick).id("add_category ${UUID.randomUUID()}")
             .addTo(this)
 
     }

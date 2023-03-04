@@ -4,6 +4,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.example.tobuy.ui.fragment.home.epoxy.models.LoadingEpoxyModel
 import com.example.tobuy.ui.fragment.profile.add.CategoryViewState
 import com.example.tobuy.ui.fragment.profile.epoxy.models.CategoryItemSelectionEpoxyModel
+import java.util.UUID
 
 class CategoryViewStateEpoxyController(
     private val onCategorySelected: (String) -> Unit
@@ -18,7 +19,7 @@ class CategoryViewStateEpoxyController(
     override fun buildModels() {
 
         if (viewState.isLoading) {
-            LoadingEpoxyModel().id("loading").addTo(this)
+            LoadingEpoxyModel().id("loading ${UUID.randomUUID()}").addTo(this)
             return
         }
 

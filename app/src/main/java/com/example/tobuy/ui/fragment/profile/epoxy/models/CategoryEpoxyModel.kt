@@ -8,18 +8,18 @@ import com.example.tobuy.room.entities.CategoryEntity
 
 data class CategoryEpoxyModel(
     val categoryEntity: CategoryEntity,
+    val onCategoryDeleteCallback: (CategoryEntity) -> Unit,
 ) : ViewBindingKotlinModel<ModelCategoryBinding>(R.layout.model_category) {
 
     override fun ModelCategoryBinding.bind() {
-        textView.text = categoryEntity.name
 
-        root.setOnClickListener {
-        }
+        textView.text = categoryEntity.name
 
         root.setOnLongClickListener {
             AlertDialog.Builder(it.context)
                 .setTitle("Delete ${categoryEntity.name}?")
                 .setPositiveButton("Yes") { _, _ ->
+                    onCategoryDeleteCallback.invoke(categoryEntity)
                 }
                 .setNegativeButton("Cancel") { _, _ ->
                 }

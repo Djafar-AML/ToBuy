@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tobuy.databinding.FragmentProfileBinding
+import com.example.tobuy.room.entities.CategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.profile.epoxy.controller.ProfileEpoxyController
 
@@ -13,7 +14,8 @@ class ProfileFragment : BaseFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding by lazy { _binding!! }
 
-    private val profileEpoxyController = ProfileEpoxyController(::onCategoryEmptyStateClick)
+    private val profileEpoxyController =
+        ProfileEpoxyController(::onCategoryEmptyStateClick, ::onCategoryDeleteCallback)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,6 +46,10 @@ class ProfileFragment : BaseFragment() {
     private fun onCategoryEmptyStateClick() {
         val direction = ProfileFragmentDirections.actionProfileFragmentToAddCategoryFragment()
         navigateViaNavGraph(direction)
+    }
+
+    private fun onCategoryDeleteCallback(categoryEntity: CategoryEntity) {
+        sharedViewModel.deleteCategory(categoryEntity)
     }
 
     override fun onDestroyView() {

@@ -106,11 +106,54 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
                     }
             }
 
-            HomeViewState.Sort.CATEGORY -> {}
+            HomeViewState.Sort.CATEGORY -> {
 
-            HomeViewState.Sort.OLDEST -> {}
+                var currentCategoryId = "no_id"
 
-            HomeViewState.Sort.NEWEST -> {}
+                items
+                    .sortedByDescending { it.itemEntity.priority }
+                    .forEach { itemWithCategory ->
+
+                        if (currentCategoryId != itemWithCategory.itemEntity.categoryId) {
+
+                            currentCategoryId = itemWithCategory.itemEntity.categoryId
+
+                            val headerItem =
+                                HomeViewState.DataItem(
+                                    data = itemWithCategory.categoryEntity?.name ?: "Unknown",
+                                    isHeader = true
+                                )
+
+                            dataList.add(headerItem)
+                        }
+
+                        val dataItem = HomeViewState.DataItem(data = itemWithCategory)
+                        dataList.add(dataItem)
+
+                    }
+            }
+
+            HomeViewState.Sort.OLDEST -> {
+
+                val headerItem = HomeViewState.DataItem("Oldest", isHeader = true)
+                dataList.add(headerItem)
+
+                items.sortedBy { it.itemEntity.createdAt }.forEach {
+                    val dataItem = HomeViewState.DataItem(data = it)
+                    dataList.add(dataItem)
+                }
+            }
+
+            HomeViewState.Sort.NEWEST -> {
+
+                val headerItem = HomeViewState.DataItem("Newest", isHeader = true)
+                dataList.add(headerItem)
+
+                items.sortedByDescending { it.itemEntity.createdAt }.forEach {
+                    val dataItem = HomeViewState.DataItem(data = it)
+                    dataList.add(dataItem)
+                }
+            }
 
         }
 

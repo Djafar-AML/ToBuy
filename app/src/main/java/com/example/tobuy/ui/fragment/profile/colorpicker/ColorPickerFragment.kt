@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.tobuy.databinding.FragmentColorPickerBinding
+import com.example.tobuy.prefs.Prefs
 import com.example.tobuy.ui.fragment.base.BaseFragment
 import com.example.tobuy.ui.fragment.profile.colorpicker.vm.ColorPickerViewModel
+import java.util.*
 
 class ColorPickerFragment : BaseFragment() {
 
@@ -36,13 +38,33 @@ class ColorPickerFragment : BaseFragment() {
         setPriorityName()
         initViews()
         setupObservers()
+        setOnClickListeners()
 
     }
 
-    private fun setPriorityName() {
-        colorPickerViewModel.setPriorityName(selectPriority) { r, g, b ->
+    private fun setOnClickListeners() {
 
+        binding.apply {
+
+            saveButton.setOnClickListener {
+
+                val viewState =
+                    colorPickerViewModel.viewStateLiveData.value ?: return@setOnClickListener
+
+                val color = currentRGB(viewState)
+
+                when (selectPriority.lowercase(Locale.US)) {
+                    "low" -> Prefs.setLowPriorityColor(color)
+                    "medium" -> Prefs.setMediumPriorityColor(color)
+                    "high" -> Prefs.setHighPriorityColor(color)
+                }
+
+            }
         }
+    }
+
+    private fun setPriorityName() {
+        colorPickerViewModel.setPriorityName(selectPriority, ::colorsCallback)
     }
 
     private fun initViews() {
@@ -72,11 +94,24 @@ class ColorPickerFragment : BaseFragment() {
 
             binding.titleTextView.text = viewState.getFormattedTitle()
 
-            val color = Color.rgb(viewState.red, viewState.green, viewState.blue)
+            val color = currentRGB(viewState)
 
             binding.colorView.setBackgroundColor(color)
 
         }
+    }
+
+    private fun currentRGB(viewState: ColorPickerViewModel.ViewState) =
+        Color.rgb(viewState.red, viewState.green, viewState.blue)
+
+    private fun colorsCallback(red: Int, green: Int, blue: Int) {
+
+        binding.apply {
+            redColorLayout.seekBar.progress = red
+            greenColorLayout.seekBar.progress = green
+            blueColorLayout.seekBar.progress = blue
+        }
+
     }
 
     override fun onDestroyView() {

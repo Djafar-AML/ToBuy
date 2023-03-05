@@ -49,7 +49,9 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun onCategoryDeleteCallback(categoryEntity: CategoryEntity) {
-        sharedViewModel.deleteCategory(categoryEntity)
+//        sharedViewModel.deleteCategory(categoryEntity)
+        val direction = ProfileFragmentDirections.actionProfileFragmentToColorPickerFragment("Low")
+        navigateViaNavGraph(direction)
     }
 
     override fun onDestroyView() {

@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_profileFragment_to_addCategoryFragment"
             app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_colorPickerFragment"
+            app:destination="@id/colorPickerFragment" />
     </fragment>
 
     <fragment
@@ -42,5 +45,17 @@
         android:name="com.example.tobuy.ui.fragment.profile.add.AddCategoryFragment"
         android:label="AddCategoryFragment"
         tools:layout="@layout/fragment_add_category" />
+
+    <fragment
+        android:id="@+id/colorPickerFragment"
+        android:name="com.example.tobuy.ui.fragment.profile.colorpicker.ColorPickerFragment"
+        android:label="ColorPickerFragment"
+        tools:layout="@layout/fragment_color_picker">
+        <argument
+            android:name="priorityName"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 
 </navigation>

@@ -15,7 +15,11 @@ class ProfileFragment : BaseFragment() {
     private val binding by lazy { _binding!! }
 
     private val profileEpoxyController =
-        ProfileEpoxyController(::onCategoryEmptyStateClick, ::onCategoryDeleteCallback)
+        ProfileEpoxyController(
+            ::onCategoryEmptyStateClick,
+            ::onCategoryDeleteCallback,
+            ::onPrioritySelectCallback
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,8 +53,13 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun onCategoryDeleteCallback(categoryEntity: CategoryEntity) {
-//        sharedViewModel.deleteCategory(categoryEntity)
-        val direction = ProfileFragmentDirections.actionProfileFragmentToColorPickerFragment("Low")
+        sharedViewModel.deleteCategory(categoryEntity)
+    }
+
+    private fun onPrioritySelectCallback(priorityName: String) {
+
+        val direction =
+            ProfileFragmentDirections.actionProfileFragmentToColorPickerFragment(priorityName)
         navigateViaNavGraph(direction)
     }
 

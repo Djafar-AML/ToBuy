@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import com.example.tobuy.R
 import com.example.tobuy.databinding.ModelItemEntityBinding
 import com.example.tobuy.epxoybinding.ViewBindingKotlinModel
+import com.example.tobuy.prefs.Prefs
 import com.example.tobuy.room.entities.ItemEntity
 import com.example.tobuy.room.entities.ItemWithCategoryEntity
 
@@ -30,12 +31,11 @@ data class ItemEntityEpoxyModel(
             descriptionTextView.text = itemWithCategoryEntity.itemEntity.description
         }
 
-        val colorRes = colorResBasedOnPriority()
-        val color = ContextCompat.getColor(root.context, colorRes)
+        val color = colorBasedOnPriority()
         priorityTextView.setBackgroundColor(color)
         root.strokeColor = color
 
-        itemWithCategoryEntity.categoryEntity?.name .let {
+        itemWithCategoryEntity.categoryEntity?.name.let {
             categoryNameTextView.visibility = View.VISIBLE
             categoryNameTextView.text = itemWithCategoryEntity.categoryEntity?.name
         }
@@ -46,10 +46,10 @@ data class ItemEntityEpoxyModel(
 
     }
 
-    private fun colorResBasedOnPriority() = when (itemWithCategoryEntity.itemEntity.priority) {
-        1 -> android.R.color.holo_green_dark
-        2 -> android.R.color.holo_orange_dark
-        3 -> android.R.color.holo_red_dark
+    private fun colorBasedOnPriority() = when (itemWithCategoryEntity.itemEntity.priority) {
+        1 -> Prefs.getLowPriorityColor()
+        2 -> Prefs.getMediumPriorityColor()
+        3 -> Prefs.getHighPriorityColor()
         else -> R.color.gray_700
     }
 

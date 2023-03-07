@@ -22,7 +22,7 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun initBottomSheetEpoxyController(): BottomSheetEpoxyController {
         return BottomSheetEpoxyController(HomeViewState.Sort.values()) {
-            sharedViewModel.cuurentSort = it
+            sharedViewModel.currentSort = it
             dismiss()
         }
     }

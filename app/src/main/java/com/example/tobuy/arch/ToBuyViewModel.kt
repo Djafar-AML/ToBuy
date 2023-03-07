@@ -29,7 +29,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
     val allItemWithCategoryEntity = _allItemWithCategoryEntity.asLiveData()
 
     // home page
-    var cuurentSort = HomeViewState.Sort.NONE
+    var currentSort = HomeViewState.Sort.NONE
         set(value) {
             field = value
             updateHomeViewState(allItemWithCategoryEntity.value!!)
@@ -77,7 +77,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
 
         val dataList = ArrayList<HomeViewState.DataItem<*>>()
 
-        when (cuurentSort) {
+        when (currentSort) {
 
             HomeViewState.Sort.NONE -> {
 
@@ -161,7 +161,7 @@ class ToBuyViewModel @Inject constructor(private val toBuyRepo: ToButRepo) : Vie
             HomeViewState(
                 dataList = dataList,
                 isLoading = false,
-                sort = cuurentSort
+                sort = currentSort
             )
         )
     }

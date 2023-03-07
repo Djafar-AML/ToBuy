@@ -10,6 +10,7 @@ import com.example.tobuy.databinding.FragmentAddItemEntityBinding
 import com.example.tobuy.room.entities.ItemEntity
 import com.example.tobuy.room.entities.ItemWithCategoryEntity
 import com.example.tobuy.ui.fragment.base.BaseFragment
+import com.example.tobuy.ui.fragment.profile.colorpicker.SeekBarListener
 import com.example.tobuy.ui.fragment.profile.epoxy.controller.CategoryViewStateEpoxyController
 import java.util.*
 
@@ -106,35 +107,7 @@ class AddItemEntityFragment : BaseFragment() {
                 }
             }
 
-            quantitySeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-
-
-                    val isValidInput = validateUserInput()
-
-                    if (isValidInput.not()) {
-                        return
-                    }
-
-                    val sanitizedText = modifyTextBasedOnSeekBar(progress)
-
-                    binding.titleEditText.apply {
-                        setText(sanitizedText)
-                        setSelection(sanitizedText.length)
-                    }
-
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
+            quantitySeekBar.setOnSeekBarChangeListener(SeekBarListener(::onSeekbarProgressChange))
         }
     }
 
@@ -277,6 +250,22 @@ class AddItemEntityFragment : BaseFragment() {
             sharedViewModel.categoryEmptyList()
         }
 
+    }
+
+    private fun onSeekbarProgressChange(progress: Int) {
+
+        val isValidInput = validateUserInput()
+
+        if (isValidInput.not()) {
+            return
+        }
+
+        val sanitizedText = modifyTextBasedOnSeekBar(progress)
+
+        binding.titleEditText.apply {
+            setText(sanitizedText)
+            setSelection(sanitizedText.length)
+        }
     }
 
     override fun onDestroyView() {

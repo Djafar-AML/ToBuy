@@ -3,7 +3,7 @@ package com.example.tobuy.room.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "item_entity")
+@Entity(tableName = "item_entities")
 data class ItemEntity(
     @PrimaryKey
     val id: String = "",
@@ -11,5 +11,5 @@ data class ItemEntity(
     val description: String? = null,
     val priority: Int = 0,
     val createdAt: Long = 0L,
-    val categoryId: String = ""
+    val categoryId: String = "" // foreign key
 )

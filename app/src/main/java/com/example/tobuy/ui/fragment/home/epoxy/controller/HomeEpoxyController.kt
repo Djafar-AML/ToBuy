@@ -42,7 +42,7 @@ class HomeEpoxyController(
 
             val itemWithCategoryEntity = dataItem.data as ItemWithCategoryEntity
             ItemEntityEpoxyModel(itemWithCategoryEntity, onBumpPriority, onItemSelect)
-                .id(itemWithCategoryEntity.itemEntity.categoryId)
+                .id(itemWithCategoryEntity.itemEntity.id)
                 .addTo(this)
         }
 

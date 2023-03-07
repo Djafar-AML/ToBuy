@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "category_entity")
+@Entity(tableName = "category_entities")
 data class CategoryEntity(
     @PrimaryKey
     val id: String = "",

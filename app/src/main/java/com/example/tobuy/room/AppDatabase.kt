@@ -25,5 +25,5 @@ private fun createRoomDatabase(): AppDatabase {
     return Room.databaseBuilder(
         application, AppDatabase::class.java,
         name = "to_buy_database"
-    ).addMigrations(MIGRATION_1_2()).build()
+    ).addMigrations(MIGRATION_1_2).build()
 }

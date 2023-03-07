@@ -14,11 +14,13 @@ interface ItemEntityDao {
     @Transaction
     @Query("SELECT * FROM item_entity")
     fun getAllItemWithCategoryEntity(): Flow<List<ItemWithCategoryEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(itemEntity: ItemEntity)
 
     @Delete
     suspend fun delete(itemEntity: ItemEntity)
+
     @Update
     suspend fun update(itemEntity: ItemEntity)
 
